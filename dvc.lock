@@ -35,7 +35,7 @@ stages:
       size: 1458
     params:
       params.yaml:
-        train.clf: 0
+        train.clf: 1
         train.params.algorithm: SAMME
         train.params.alpha: 1
         train.params.max_iter: 1000
@@ -44,11 +44,16 @@ stages:
     outs:
     - path: data/models/model.pkl
       hash: md5
-      md5: e497a8794ecc4fa15bdb9e2337ba257d
-      size: 57160
+      md5: 9bf46daccf21962c46c4173bf17dc4d5
+      size: 39612
   evaluate:
     cmd: python src/evaluate.py data
     deps:
+    - path: data/models
+      hash: md5
+      md5: 9d4fadeb012f2a5282aca9e441225545.dir
+      size: 39623
+      nfiles: 2
     - path: data/prepared
       hash: md5
       md5: e2b19f38e93a4f64af693fdac9846354.dir
@@ -61,6 +66,6 @@ stages:
     outs:
     - path: dvclive
       hash: md5
-      md5: dc95bd9478ab06cfdb95db465644365c.dir
-      size: 279
+      md5: 8c767e37d1eb9cff30cb752b5d5721eb.dir
+      size: 273
       nfiles: 5
