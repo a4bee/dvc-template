@@ -3,7 +3,7 @@ prepare:
   seed: 420
 train:
   seed: 420
-  clf: 0
+  clf: 1
   params:
     alpha: 1
     max_iter: 1000
