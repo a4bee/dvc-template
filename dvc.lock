@@ -5,8 +5,8 @@ stages:
     deps:
     - path: data/Student_performance_data _.csv
       hash: md5
-      md5: fe8bac208c3122bba88eb72aa84dd047
-      size: 166901
+      md5: 47cf64b2a849cd01c0c5cbba8e94c863
+      size: 166972
     - path: src/prepare.py
       hash: md5
       md5: d7a29202647b83a3ade7f6a684e00ce9
@@ -18,16 +18,16 @@ stages:
     outs:
     - path: data/prepared
       hash: md5
-      md5: e2b19f38e93a4f64af693fdac9846354.dir
-      size: 347723
+      md5: dfcaf1fd29c4eaf30d365f69d4d242a0.dir
+      size: 347867
       nfiles: 4
   train:
     cmd: python src/train.py data
     deps:
     - path: data/prepared
       hash: md5
-      md5: e2b19f38e93a4f64af693fdac9846354.dir
-      size: 347723
+      md5: dfcaf1fd29c4eaf30d365f69d4d242a0.dir
+      size: 347867
       nfiles: 4
     - path: src/train.py
       hash: md5
@@ -44,20 +44,20 @@ stages:
     outs:
     - path: data/models/model.pkl
       hash: md5
-      md5: 9bf46daccf21962c46c4173bf17dc4d5
+      md5: a35e635bebe1f3df7317e66f6c061e6a
       size: 39612
   evaluate:
     cmd: python src/evaluate.py data
     deps:
     - path: data/models
       hash: md5
-      md5: 9d4fadeb012f2a5282aca9e441225545.dir
+      md5: 27e4b0795825fa08479c758b6655517d.dir
       size: 39623
       nfiles: 2
     - path: data/prepared
       hash: md5
-      md5: e2b19f38e93a4f64af693fdac9846354.dir
-      size: 347723
+      md5: dfcaf1fd29c4eaf30d365f69d4d242a0.dir
+      size: 347867
       nfiles: 4
     - path: src/evaluate.py
       hash: md5
@@ -66,6 +66,6 @@ stages:
     outs:
     - path: dvclive
       hash: md5
-      md5: 8c767e37d1eb9cff30cb752b5d5721eb.dir
+      md5: 5b04c07b853213af2049284351a1eb13.dir
       size: 273
       nfiles: 5
