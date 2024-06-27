@@ -1,0 +1,66 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/prepare.py "data/Student_performance_data _.csv"
+    deps:
+    - path: data/Student_performance_data _.csv
+      hash: md5
+      md5: fe8bac208c3122bba88eb72aa84dd047
+      size: 166901
+    - path: src/prepare.py
+      hash: md5
+      md5: d7a29202647b83a3ade7f6a684e00ce9
+      size: 1223
+    params:
+      params.yaml:
+        prepare.seed: 420
+        prepare.split: 0.2
+    outs:
+    - path: data/prepared
+      hash: md5
+      md5: e2b19f38e93a4f64af693fdac9846354.dir
+      size: 347723
+      nfiles: 4
+  train:
+    cmd: python src/train.py data
+    deps:
+    - path: data/prepared
+      hash: md5
+      md5: e2b19f38e93a4f64af693fdac9846354.dir
+      size: 347723
+      nfiles: 4
+    - path: src/train.py
+      hash: md5
+      md5: c02424733b249cf1e8f0ceb2dc6bd67d
+      size: 1458
+    params:
+      params.yaml:
+        train.clf: 0
+        train.params.algorithm: SAMME
+        train.params.alpha: 1
+        train.params.max_iter: 1000
+        train.params.random_state: 420
+        train.seed: 420
+    outs:
+    - path: data/models/model.pkl
+      hash: md5
+      md5: e497a8794ecc4fa15bdb9e2337ba257d
+      size: 57160
+  evaluate:
+    cmd: python src/evaluate.py data
+    deps:
+    - path: data/prepared
+      hash: md5
+      md5: e2b19f38e93a4f64af693fdac9846354.dir
+      size: 347723
+      nfiles: 4
+    - path: src/evaluate.py
+      hash: md5
+      md5: 85533baca6be5396f33f2cb9b310a461
+      size: 1241
+    outs:
+    - path: dvclive
+      hash: md5
+      md5: dc95bd9478ab06cfdb95db465644365c.dir
+      size: 279
+      nfiles: 5

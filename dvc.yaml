@@ -1,0 +1,39 @@
+stages:
+  prepare:
+    cmd: python src/prepare.py "data/Student_performance_data _.csv"
+    deps:
+    - data/Student_performance_data _.csv
+    - src/prepare.py
+    params:
+    - prepare.seed
+    - prepare.split
+    outs:
+    - data/prepared
+  train:
+    cmd: python src/train.py data
+    deps:
+    - data/prepared
+    - src/train.py
+    params:
+    - train.clf
+    - train.params.algorithm
+    - train.params.alpha
+    - train.params.max_iter
+    - train.params.random_state
+    - train.seed
+    outs:
+    - data/models/model.pkl
+  evaluate:
+    cmd: python src/evaluate.py data
+    deps:
+    - data/prepared
+    - src/evaluate.py
+    outs:
+    - dvclive
+
+metrics:
+- eval/metrics.json
+- dvclive/metrics.json
+plots:
+- dvclive/plots/metrics:
+    x: step
