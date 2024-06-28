@@ -13,12 +13,12 @@ stages:
       size: 1223
     params:
       params.yaml:
-        prepare.seed: 420
+        prepare.seed: 421
         prepare.split: 0.2
     outs:
     - path: data/prepared
       hash: md5
-      md5: dfcaf1fd29c4eaf30d365f69d4d242a0.dir
+      md5: 5ded2a64f1f3262d02da459a5777711c.dir
       size: 347867
       nfiles: 4
   train:
@@ -26,7 +26,7 @@ stages:
     deps:
     - path: data/prepared
       hash: md5
-      md5: dfcaf1fd29c4eaf30d365f69d4d242a0.dir
+      md5: 5ded2a64f1f3262d02da459a5777711c.dir
       size: 347867
       nfiles: 4
     - path: src/train.py
@@ -44,19 +44,19 @@ stages:
     outs:
     - path: data/models/model.pkl
       hash: md5
-      md5: a35e635bebe1f3df7317e66f6c061e6a
+      md5: 2ca7a8227aaca7acd24f72760ecaf8dc
       size: 39612
   evaluate:
     cmd: python src/evaluate.py data
     deps:
     - path: data/models
       hash: md5
-      md5: 27e4b0795825fa08479c758b6655517d.dir
+      md5: 78b406bf4995ffac443cfb849ffb2b6d.dir
       size: 39623
       nfiles: 2
     - path: data/prepared
       hash: md5
-      md5: dfcaf1fd29c4eaf30d365f69d4d242a0.dir
+      md5: 5ded2a64f1f3262d02da459a5777711c.dir
       size: 347867
       nfiles: 4
     - path: src/evaluate.py
@@ -66,6 +66,6 @@ stages:
     outs:
     - path: dvclive
       hash: md5
-      md5: 5b04c07b853213af2049284351a1eb13.dir
+      md5: 4da2643db55df587530393fa2ec864c5.dir
       size: 273
       nfiles: 5

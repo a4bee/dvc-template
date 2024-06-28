@@ -1,6 +1,6 @@
 prepare:
   split: 0.2
-  seed: 420
+  seed: 421
 train:
   seed: 420
   clf: 1
