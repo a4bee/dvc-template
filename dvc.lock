@@ -5,12 +5,12 @@ stages:
     deps:
     - path: data/Student_performance_data _.csv
       hash: md5
-      md5: 47cf64b2a849cd01c0c5cbba8e94c863
-      size: 166972
+      md5: fe8bac208c3122bba88eb72aa84dd047
+      size: 166901
     - path: src/prepare.py
       hash: md5
-      md5: d7a29202647b83a3ade7f6a684e00ce9
-      size: 1223
+      md5: 001f67fdfec1694b423d8e17ccc6e46f
+      size: 1156
     params:
       params.yaml:
         prepare.seed: 421
@@ -18,16 +18,16 @@ stages:
     outs:
     - path: data/prepared
       hash: md5
-      md5: 5ded2a64f1f3262d02da459a5777711c.dir
-      size: 347867
+      md5: 393574bcca23cb9f3c253c1d38cbb740.dir
+      size: 347723
       nfiles: 4
   train:
     cmd: python src/train.py data
     deps:
     - path: data/prepared
       hash: md5
-      md5: 5ded2a64f1f3262d02da459a5777711c.dir
-      size: 347867
+      md5: 393574bcca23cb9f3c253c1d38cbb740.dir
+      size: 347723
       nfiles: 4
     - path: src/train.py
       hash: md5
@@ -44,28 +44,40 @@ stages:
     outs:
     - path: data/models/model.pkl
       hash: md5
-      md5: 2ca7a8227aaca7acd24f72760ecaf8dc
+      md5: 407e2baa7bfec968124bfd3e28dbfe26
       size: 39612
   evaluate:
     cmd: python src/evaluate.py data
     deps:
     - path: data/models
       hash: md5
-      md5: 78b406bf4995ffac443cfb849ffb2b6d.dir
+      md5: 15555df9604f9d1789f75d2a729e2abc.dir
       size: 39623
       nfiles: 2
     - path: data/prepared
       hash: md5
-      md5: 5ded2a64f1f3262d02da459a5777711c.dir
-      size: 347867
+      md5: 393574bcca23cb9f3c253c1d38cbb740.dir
+      size: 347723
       nfiles: 4
     - path: src/evaluate.py
       hash: md5
-      md5: 85533baca6be5396f33f2cb9b310a461
-      size: 1241
+      md5: 51df0827881ebda6ca01737108937426
+      size: 1113
     outs:
     - path: dvclive
       hash: md5
-      md5: 4da2643db55df587530393fa2ec864c5.dir
+      md5: c994ebefb44941b0186831486a03d4aa.dir
       size: 273
       nfiles: 5
+  download-data:
+    cmd: "kaggle datasets download -d rabieelkharoua/students-performance-dataset
+      -p ./data\npython src/unzip_data.py\n"
+    outs:
+    - path: data/Student_performance_data _.csv
+      hash: md5
+      md5: fe8bac208c3122bba88eb72aa84dd047
+      size: 166901
+    - path: data/students-performance-dataset.zip
+      hash: md5
+      md5: 32ec849f706eefa2d64c21fd6d79c756
+      size: 67743

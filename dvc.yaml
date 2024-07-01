@@ -1,39 +1,46 @@
 stages:
+  download-data:
+    cmd: |
+      kaggle datasets download -d rabieelkharoua/students-performance-dataset -p ./data
+      python src/unzip_data.py
+    outs:
+      - data/Student_performance_data _.csv
+      - data/students-performance-dataset.zip
   prepare:
     cmd: python src/prepare.py "data/Student_performance_data _.csv"
     deps:
-    - data/Student_performance_data _.csv
-    - src/prepare.py
+      - data/Student_performance_data _.csv
+      - src/prepare.py
     params:
-    - prepare.seed
-    - prepare.split
+      - prepare.seed
+      - prepare.split
     outs:
-    - data/prepared
+      - data/prepared
   train:
     cmd: python src/train.py data
     deps:
-    - data/prepared
-    - src/train.py
+      - data/prepared
+      - src/train.py
     params:
-    - train.clf
-    - train.params.algorithm
-    - train.params.alpha
-    - train.params.max_iter
-    - train.params.random_state
-    - train.seed
+      - train.clf
+      - train.params.algorithm
+      - train.params.alpha
+      - train.params.max_iter
+      - train.params.random_state
+      - train.seed
     outs:
-    - data/models/model.pkl
+      - data/models/model.pkl
   evaluate:
     cmd: python src/evaluate.py data
     deps:
-    - data/models
-    - data/prepared
-    - src/evaluate.py
+      - data/models
+      - data/prepared
+      - src/evaluate.py
     outs:
-    - dvclive
+      - dvclive
 
 metrics:
-- dvclive/metrics.json
+  - dvclive/metrics.json
 plots:
-- dvclive/plots/metrics:
-    x: step
+  - dvclive/plots/metrics:
+      x: step
